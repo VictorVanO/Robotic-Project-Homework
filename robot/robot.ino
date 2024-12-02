@@ -1,19 +1,12 @@
-#include <Wire.h>
-#include "Motors.h"
+#include "FSM.h"  // Inclusion de la FSM
+
+FSM fsm;          // Créer une instance de la FSM
 
 void setup() {
-  Serial.begin(9600);
-
-  initMotors();
+    Serial.begin(9600);
+    fsm.init();   // Initialiser la FSM (et ses dépendances)
 }
 
 void loop() {
-  setMotorsSpeed(255);
-  runMotors(FORWARD);
-  Serial.println("Motors running with max speed: M1=255, M2=255");
-  delay(10000);
-
-  stopMotors();
-  Serial.println("Motors stopped!");
-  delay(2000);
+    fsm.run();    // Exécuter la logique de la FSM en continu
 }

@@ -1,12 +1,24 @@
 #ifndef FSM_H
 #define FSM_H
 
+#include "Motors.h"
+#include "Ultrasonic.h"
+
+enum RobotState {
+    Idle,
+    MoveForward,
+    ObstacleDetected
+};
+
 class FSM {
 public:
-    void init();
-    void run();
+    FSM();               // Constructeur
+    void init();         // Initialisation de la FSM
+    void run();          // Exécuter la logique de la FSM
+
 private:
-    void handleState();
+    RobotState state;    // État actuel
+    void handleState();  // Gérer les transitions d'état
 };
 
 #endif
