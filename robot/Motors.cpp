@@ -22,6 +22,16 @@ void runMotors(uint8_t direction) {
   motor2->run(direction);
 }
 
+void turnLeft() {
+    motor1->run(RELEASE);  // Arrêter le moteur gauche
+    motor2->run(FORWARD);  // Faire tourner le moteur droit
+}
+
+void turnRight() {
+    motor1->run(FORWARD);  // Faire tourner le moteur gauche
+    motor2->run(RELEASE);  // Arrêter le moteur droit
+}
+
 void stopMotors() {
   motor1->run(RELEASE);
   motor2->run(RELEASE);

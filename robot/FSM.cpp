@@ -20,24 +20,43 @@ void FSM::handleState() {
             if (distance > 0 && distance < 10) {  // Si un obstacle est détecté à moins de 10cm
                 state = ObstacleDetected;
             } else {
-                state = ObstacleNotDetected;
+                state = RunForward;
+            }
+            break;
+        
+        case RunForward:
+            setMotorsSpeed(150);
+            runMotors(FORWARD);        
+            if (distance <= 10) {
+                state = ObstacleDetected;
             }
             break;
         
         case ObstacleDetected:
-            setMotorsSpeed(150);
-            runMotors(FORWARD);        
-            if (distance >= 10) {
-                state = ObstacleNotDetected;
-            }
-            break;
-
-        case ObstacleNotDetected:
             stopMotors();
-            if (distance > 0 && distance < 10) {
-                state = ObstacleDetected;
+            state = TurnLeft;
+            break;
+        
+        case TurnLeft:
+            setMotorsSpeed(150);
+            turnLeft();
+            delay(500);
+            if (distance > 0 && distance < 10) {  // Si un obstacle est détecté à moins de 10cm
+                state = TurnRight;
+            } else {
+                state = RunForward;
             }
             break;
 
+        case TurnRight:
+            setMotorsSpeed(150);
+            turnRight();
+            delay(500);
+            if (distance > 0 && distance < 10) {  // Si un obstacle est détecté à moins de 10cm
+                state = ObstacleDetected;
+            } else {
+                state = RunForward;
+            }
+            break;
     }
 }

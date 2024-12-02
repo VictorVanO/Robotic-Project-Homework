@@ -9,4 +9,5 @@ void setup() {
 
 void loop() {
     fsm.run();    // Exécuter la logique de la FSM en continu
+    delay(100);
 }
