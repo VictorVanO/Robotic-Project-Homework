@@ -1,5 +1,5 @@
 #include <Wire.h>
-#include "motors/Motor.h"
+#include "Motors.h"
 
 void setup() {
   Serial.begin(9600);

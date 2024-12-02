@@ -1,6 +1,6 @@
 #include "FSM.h"
-#include "Capteurs/Ultrason.h"
-#include "Moteurs/Moteur.h"
+#include "sensors/Ultrason.h"
+#include "Motors.h"
 
 void FSM::init() {
     
