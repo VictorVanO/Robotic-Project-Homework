@@ -1,6 +1,4 @@
 #include "FSM.h"
-#include "Motors.h"
-#include "Ultrasonic.h"
 
 // Constructeur : initialisation de l'état à Idle
 FSM::FSM() : state(Idle) {}
@@ -19,26 +17,27 @@ void FSM::handleState() {
 
     switch (state) {
         case Idle:
-            if (distance > 0 && distance < 100) {  // Si un obstacle est détecté proche
+            if (distance > 0 && distance < 10) {  // Si un obstacle est détecté à moins de 10cm
                 state = ObstacleDetected;
             } else {
-                state = MoveForward;
+                state = ObstacleNotDetected;
+            }
+            break;
+        
+        case ObstacleDetected:
+            setMotorsSpeed(150);
+            runMotors(FORWARD);        
+            if (distance >= 10) {
+                state = ObstacleNotDetected;
             }
             break;
 
-        case MoveForward:
-            setMotorsSpeed(150);       // Régler la vitesse des moteurs
-            runMotors(FORWARD);        // Faire avancer les moteurs
-            if (distance > 0 && distance < 30) {  // Obstacle très proche
+        case ObstacleNotDetected:
+            stopMotors();
+            if (distance > 0 && distance < 10) {
                 state = ObstacleDetected;
             }
             break;
 
-        case ObstacleDetected:
-            stopMotors();              // Arrêter les moteurs
-            if (distance >= 100) {     // Retour à un état sûr
-                state = MoveForward;
-            }
-            break;
     }
 }

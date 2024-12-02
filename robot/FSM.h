@@ -6,8 +6,8 @@
 
 enum RobotState {
     Idle,
-    MoveForward,
-    ObstacleDetected
+    ObstacleDetected,
+    ObstacleNotDetected
 };
 
 class FSM {

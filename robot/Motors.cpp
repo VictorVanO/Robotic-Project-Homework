@@ -13,19 +13,16 @@ void initMotors() {
 }
 
 void setMotorsSpeed(uint8_t speed) {
-  // Régler la vitesse des moteurs
   motor1->setSpeed(speed);
   motor2->setSpeed(speed);
 }
 
 void runMotors(uint8_t direction) {
-  // Faire tourner les moteurs dans une direction donnée
   motor1->run(direction);
   motor2->run(direction);
 }
 
 void stopMotors() {
-  // Arrêter les moteurs
   motor1->run(RELEASE);
   motor2->run(RELEASE);
 }
