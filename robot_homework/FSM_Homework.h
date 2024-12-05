@@ -17,7 +17,7 @@ public:
     FSM();               // Constructeur
     void init();         // Initialisation de la FSM
     void run();          // Exécuter la logique de la FSM
-
+    
 private:
     RobotState state;    // État actuel
     void handleState();  // Gérer les transitions d'état
