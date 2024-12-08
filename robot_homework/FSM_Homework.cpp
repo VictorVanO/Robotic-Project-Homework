@@ -91,7 +91,7 @@ void FSM::handleState() {
                     state = RunForward;
                     directionCounter++;
 
-                    Serial.println("detection counter");
+                    Serial.println("direction counter");
                     Serial.println(directionCounter);
                     break;
             }
@@ -99,8 +99,10 @@ void FSM::handleState() {
         
         
         case Stop:
-          Serial.print("stop");
-          stopMotors();
+            Serial.print("stop");
+            stopMotors();
+            directionCounter = 0;
+
           
           break;
     }
