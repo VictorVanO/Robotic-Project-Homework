@@ -1,7 +1,7 @@
 #include "FSM_Homework.h"
 
-// Constructeur : initialisation de l'état à Idle
-FSM::FSM() : state(Idle) {}
+// Constructeur : initialisation des variables
+FSM::FSM() : state(Idle), direction(0), directionCounter(0) {}
 
 void FSM::init() {
     initMotors();      // Initialiser les moteurs
@@ -102,8 +102,7 @@ void FSM::handleState() {
             Serial.print("stop");
             stopMotors();
             directionCounter = 0;
-
-          
-          break;
+            direction = 0;
+            break;
     }
 }
