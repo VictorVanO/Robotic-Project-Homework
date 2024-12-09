@@ -23,27 +23,7 @@ void initBluetooth() {
     // Initialize the Serial communication (to communicate with your computer's Serial Monitor)
     Serial.begin(9600);
 
-// Function to handle Bluetooth communication
-void handleBluetoothCommunication() {
-    // Check if data is available to read from Bluetooth
-    while (BTSerial.available() > 0) {
-        char data = (char) BTSerial.read();  // Read one byte of data from the Bluetooth module
-        messageBuffer += data;               // Add the received data to the message buffer
 
-        // If a semicolon (;) is detected, process the message
-        if (data == ';') {
-            message = messageBuffer;        // Store the full message up to the semicolon
-            messageBuffer = "";             // Clear the buffer for the next message
-
-            // Print the received message to the Serial Monitor
-            Serial.print(message);
-
-            // Send a response back to the Bluetooth terminal
-            message = "You sent " + message;
-            BTSerial.print(message);  // Send the response via Bluetooth
-        }
-    }
-}
 
 void sendMessage(str newDirection) {
     String message = "New direction: ";
