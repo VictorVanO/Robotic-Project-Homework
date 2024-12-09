@@ -1,6 +1,7 @@
 #include "FSM_Homework.h"
 
 
+
 FSM::FSM() : state(Idle), startTime(0), direction(0), directionCounter(0) {}
 
 
@@ -89,7 +90,7 @@ void FSM::handleState() {
                 case 1:
                     direction = 2; //Backward
                     state = RunBackward;
-                    sendMessage("Backward")
+                    sendMessage("Backward");
                     directionCounter++;
                     Serial.print("direction counter : ");
                     Serial.println(directionCounter);
@@ -97,7 +98,7 @@ void FSM::handleState() {
                 case 2:
                     direction = 1;
                     state = RunForward;
-                    sendMessage("Forward")
+                    sendMessage("Forward");
                     directionCounter++;
                     Serial.print("direction counter : ");
                     Serial.println(directionCounter);

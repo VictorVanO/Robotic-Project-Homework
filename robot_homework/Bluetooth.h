@@ -2,15 +2,15 @@
 #define BLUETOOTH_H
 
 #include <SoftwareSerial.h>
+#include <Arduino.h>
 
 
 // Pin configurations for Bluetooth
-const byte rxPin = 8;
-const byte txPin = 9;
-SoftwareSerial BTSerial;
+extern const byte rxPin;
+extern const byte txPin;
 
 // Function declarations
 void initBluetooth();
-void sendMessage();
+void sendMessage(String newDirection);
 
 #endif // BLUETOOTH_H
