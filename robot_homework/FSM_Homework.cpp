@@ -40,7 +40,7 @@ void FSM::handleState() {
             stopMotors();
             setMotorsSpeed(100);
             runMotors(FORWARD); 
-            delay(500);
+            delay(1000);
             if (distance > 0 && distance < 10) {
                 state = ObstacleDetected;
             } else if (currentTime - startTime >= timeoutDuration) {
@@ -56,7 +56,7 @@ void FSM::handleState() {
             stopMotors();
             setMotorsSpeed(100);
             runMotors(BACKWARD); 
-            delay(500); 
+            delay(1000); 
             if (distance > 0 && distance < 10) {
                 state = ObstacleDetected;
             } else if (currentTime - startTime >= timeoutDuration) {
