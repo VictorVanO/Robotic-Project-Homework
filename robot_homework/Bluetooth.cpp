@@ -2,8 +2,8 @@
 #include "Arduino.h"
 
 // Define the pins
-const byte rxPin = 8;
-const byte txPin = 9;
+const byte rxPin = 0;
+const byte txPin = 1;
 
 // Instantiate the SoftwareSerial object
 SoftwareSerial BTSerial(rxPin, txPin); // RX TX
