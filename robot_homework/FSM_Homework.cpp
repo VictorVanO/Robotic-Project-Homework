@@ -1,108 +1,110 @@
 #include "FSM_Homework.h"
 
-// Constructeur : initialisation des variables
-FSM::FSM() : state(Idle), direction(0), directionCounter(0) {}
+
+FSM::FSM() : state(Idle), startTime(0), direction(0), directionCounter(0) {}
+
 
 void FSM::init() {
-    initMotors();      // Initialiser les moteurs
-    initUltrasonic();    // Initialiser le capteur ultrason
+    initMotors();
+    initUltrasonic();
 }
 
 void FSM::run() {
-    handleState();     // Gérer la transition et l'exécution de l'état
+    handleState();
 }
-int direction = 0;//Init
-int directionCounter = 0;
 
 void FSM::handleState() {
-    float distance = readDistance(); // Lire la distance depuis le capteur ultrason
+    float distance = readDistance();
+    const unsigned long timeoutDuration = 30000;
+    unsigned long currentTime = millis();
     
     switch (state) {
         case Idle:
-            Serial.println("idle");  
-            distance = readDistance();
-            Serial.println(distance);  
-
-            if (distance > 0 && distance < 10) {  // Si un obstacle est détecté à moins de 10cm
+            Serial.println("Robot state: Idle");
+            // distance = readDistance();
+            Serial.print("Distance from object: ");
+            Serial.println(distance);
+            // If there is an obstacle in less than 10cm
+            if (distance > 0 && distance < 10) {
                 state = ObstacleDetected;
             } else {
                 state = Idle;
             }
             break;
-        
-        case RunForward:
-            
-              stopMotors();
 
-              setMotorsSpeed(150);
-              runMotors(FORWARD); 
-              Serial.println("forward"); 
-              delay(1000);  
-              distance = readDistance(); 
-              if (distance>0 && distance <= 10) {
-                  state = ObstacleDetected;
-                  
-              }
-            
-            
+        case RunForward:
+            Serial.println("Robot running forward.");
+            Serial.print("Timer time : ");
+            Serial.println(currentTime - startTime);
+            // distance = readDistance(); 
+            stopMotors();
+            setMotorsSpeed(100);
+            runMotors(FORWARD); 
+            delay(1000);
+            if (distance > 0 && distance < 10) {
+                state = ObstacleDetected;
+            } else if (currentTime - startTime >= timeoutDuration) {
+                state = Stop;
+            }
             break;
 
         case RunBackward:
-              Serial.println("backward");    
-              stopMotors();
-              setMotorsSpeed(150);
-              runMotors(BACKWARD); 
-              delay(1000); 
-              distance = readDistance();      
-              if (distance>0 && distance <= 10) {
-                  state = ObstacleDetected;
-              }
-              break;
-            
+            Serial.println("Robot running backward."); 
+            Serial.print("Timer time : ");
+            Serial.println(currentTime - startTime);   
+            // distance = readDistance();
+            stopMotors();
+            setMotorsSpeed(100);
+            runMotors(BACKWARD); 
+            delay(1000); 
+            if (distance > 0 && distance < 10) {
+                state = ObstacleDetected;
+            } else if (currentTime - startTime >= timeoutDuration) {
+                state = Stop;
+            }
+            break;
         
         case ObstacleDetected:
+            // Start timer
+            if (startTime == 0) startTime = millis();
+            Serial.print("Timer time : ");
+            Serial.println(currentTime - startTime);
             stopMotors();
-            Serial.println("obstacle : stop");    
-            Serial.println(direction);
-            if(directionCounter>=5){
+            Serial.print("Obstacle Detected : Robot stopping or changing direction");
+            if(directionCounter >= 5){
                 state = Stop;
                 break;
             }
-
             switch (direction){
                 case 0:
-                    direction = 1;//Forward
-                    directionCounter++;
-                    Serial.println("direcction counter");
-                    Serial.println(directionCounter);
+                    direction = 1; //Forward
                     state = RunForward;
+                    directionCounter++;
+                    Serial.print("direction counter : ");
+                    Serial.println(directionCounter);
                     break;
                 case 1:
-                    direction = 2;//Backward
+                    direction = 2; //Backward
                     state = RunBackward;
                     directionCounter++;
-                    Serial.println("direcction counter");
+                    Serial.print("direction counter : ");
                     Serial.println(directionCounter);
-
                     break;
-
                 case 2:
                     direction = 1;
                     state = RunForward;
                     directionCounter++;
-
-                    Serial.println("direction counter");
+                    Serial.print("direction counter : ");
                     Serial.println(directionCounter);
                     break;
             }
             break;
         
-        
         case Stop:
-            Serial.print("stop");
+            Serial.println("Robot state: Stop.");
             stopMotors();
             directionCounter = 0;
-            direction = 0;
+            delay(10000);
             break;
     }
 }
