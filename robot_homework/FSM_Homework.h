@@ -20,6 +20,8 @@ public:
     
 private:
     RobotState state;    // État actuel
+    int direction;       // Direction actuelle (1: Forward, 2: Backward)
+    int directionCounter; // Compteur pour alterner les directions
     void handleState();  // Gérer les transitions d'état
 };
 
