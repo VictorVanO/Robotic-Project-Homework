@@ -20,6 +20,7 @@ public:
     
 private:
     RobotState state;
+    unsigned long startTime;
     void handleState();
 };
 
