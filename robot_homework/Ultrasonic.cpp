@@ -17,5 +17,5 @@ float readDistance() {
 
   duration = pulseIn(echoPin, HIGH);
   distance = (duration * 0.0343) / 2;
-  return distance; // Retourner la distance calculée
+  return distance;
 }
