@@ -7,6 +7,7 @@ FSM::FSM() : state(Idle), startTime(0), direction(0), directionCounter(0) {}
 void FSM::init() {
     initMotors();
     initUltrasonic();
+    initBluetooth();
 }
 
 void FSM::run() {
@@ -82,10 +83,13 @@ void FSM::handleState() {
                     directionCounter++;
                     Serial.print("direction counter : ");
                     Serial.println(directionCounter);
+                    sendMessage("Forward");
+
                     break;
                 case 1:
                     direction = 2; //Backward
                     state = RunBackward;
+                    sendMessage("Backward")
                     directionCounter++;
                     Serial.print("direction counter : ");
                     Serial.println(directionCounter);
@@ -93,6 +97,7 @@ void FSM::handleState() {
                 case 2:
                     direction = 1;
                     state = RunForward;
+                    sendMessage("Forward")
                     directionCounter++;
                     Serial.print("direction counter : ");
                     Serial.println(directionCounter);
