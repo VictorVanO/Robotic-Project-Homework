@@ -21,8 +21,8 @@ public:
 private:
     RobotState state;
     unsigned long startTime;
-    // int direction = 0;
-    // int directionCounter = 0;
+    int direction;
+    int directionCounter;
     void handleState();
 };
 

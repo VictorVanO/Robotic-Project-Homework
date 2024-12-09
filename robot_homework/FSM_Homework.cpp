@@ -1,6 +1,6 @@
 #include "FSM_Homework.h"
 
-FSM::FSM() : state(Idle), startTime(0) {}
+FSM::FSM() : state(Idle), startTime(0), direction(0), directionCounter(0) {}
 
 void FSM::init() {
     initMotors();
@@ -10,8 +10,6 @@ void FSM::init() {
 void FSM::run() {
     handleState();
 }
-int direction = 0;
-int directionCounter = 0;
 
 void FSM::handleState() {
     float distance = readDistance();
@@ -70,8 +68,7 @@ void FSM::handleState() {
             Serial.print("Timer time : ");
             Serial.println(currentTime - startTime);
             stopMotors();
-            Serial.print("Obstacle Detected : Robot stopping or changing direction");    
-            Serial.println(direction);
+            Serial.print("Obstacle Detected : Robot stopping or changing direction");
             if(directionCounter >= 5){
                 state = Stop;
                 break;
