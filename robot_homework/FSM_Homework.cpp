@@ -4,8 +4,9 @@
 FSM::FSM() : state(Idle) {}
 
 void FSM::init() {
-    initMotors();      // Initialiser les moteurs
-    initUltrasonic();    // Initialiser le capteur ultrason
+    initMotors();  // Initialize the motors
+    initUltrasonic();  // Initialize the ultrasound sensor
+    initBluetooth();  // Initialize the bluetooth communication
 }
 
 void FSM::run() {
@@ -76,10 +77,12 @@ void FSM::handleState() {
                     Serial.println("direcction counter");
                     Serial.println(directionCounter);
                     state = RunForward;
+                    sendMessage("Forward")
                     break;
                 case 1:
                     direction = 2;//Backward
                     state = RunBackward;
+                    sendMessage("Backward")
                     directionCounter++;
                     Serial.println("direcction counter");
                     Serial.println(directionCounter);
@@ -89,6 +92,7 @@ void FSM::handleState() {
                 case 2:
                     direction = 1;
                     state = RunForward;
+                    sendMessage("Forward")
                     directionCounter++;
 
                     Serial.println("direction counter");
