@@ -1,29 +1,27 @@
 #include "FSM_Homework.h"
 
-// Constructeur : initialisation de l'état à Idle
 FSM::FSM() : state(Idle) {}
 
 void FSM::init() {
-    initMotors();      // Initialiser les moteurs
-    initUltrasonic();    // Initialiser le capteur ultrason
+    initMotors();
+    initUltrasonic();
 }
 
 void FSM::run() {
-    handleState();     // Gérer la transition et l'exécution de l'état
+    handleState();
 }
-int direction = 0;//Init
-int directionCounter = 0;
 
 void FSM::handleState() {
-    float distance = readDistance(); // Lire la distance depuis le capteur ultrason
+    float distance = readDistance();
+    int direction = 0;
+    int directionCounter = 0;
     
     switch (state) {
         case Idle:
-            Serial.println("idle");  
-            distance = readDistance();
-            Serial.println(distance);  
-
-            if (distance > 0 && distance < 10) {  // Si un obstacle est détecté à moins de 10cm
+            Serial.println("Robot state: Idle");
+            // distance = readDistance();
+            Serial.println("Distance from object:" + distance);  
+            if (distance > 0 && distance < 10) {  // If there is an obstacle
                 state = ObstacleDetected;
             } else {
                 state = Idle;
@@ -31,9 +29,7 @@ void FSM::handleState() {
             break;
         
         case RunForward:
-            
               stopMotors();
-
               setMotorsSpeed(150);
               runMotors(FORWARD); 
               Serial.println("forward"); 
@@ -58,7 +54,6 @@ void FSM::handleState() {
                   state = ObstacleDetected;
               }
               break;
-            
         
         case ObstacleDetected:
             stopMotors();
@@ -97,13 +92,10 @@ void FSM::handleState() {
             }
             break;
         
-        
         case Stop:
-            Serial.print("stop");
+            Serial.println("Robot state: Stop");
             stopMotors();
             directionCounter = 0;
-
-          
-          break;
+            break;
     }
 }

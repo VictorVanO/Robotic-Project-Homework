@@ -14,13 +14,13 @@ enum RobotState {
 
 class FSM {
 public:
-    FSM();               // Constructeur
-    void init();         // Initialisation de la FSM
-    void run();          // Exécuter la logique de la FSM
+    FSM();
+    void init();
+    void run();
     
 private:
-    RobotState state;    // État actuel
-    void handleState();  // Gérer les transitions d'état
+    RobotState state;
+    void handleState();
 };
 
 #endif
