@@ -1,6 +1,8 @@
 #include "FSM_Homework.h"
 
+
 FSM::FSM() : state(Idle), startTime(0), direction(0), directionCounter(0) {}
+
 
 void FSM::init() {
     initMotors();
