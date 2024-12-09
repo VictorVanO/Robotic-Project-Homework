@@ -10,14 +10,13 @@ void FSM::init() {
 void FSM::run() {
     handleState();
 }
+int direction = 0;
+int directionCounter = 0;
 
 void FSM::handleState() {
     float distance = readDistance();
-    int direction = 0;
-    int directionCounter = 0;
     const unsigned long timeoutDuration = 30000;
-    // unsigned long currentTime = millis();
-    delay(200);
+    unsigned long currentTime = millis();
     
     switch (state) {
         case Idle:
@@ -35,28 +34,32 @@ void FSM::handleState() {
 
         case RunForward:
             Serial.println("Robot running forward.");
+            Serial.print("Timer time : ");
+            Serial.println(currentTime - startTime);
             // distance = readDistance(); 
             stopMotors();
-            setMotorsSpeed(150);
+            setMotorsSpeed(100);
             runMotors(FORWARD); 
             delay(500);
             if (distance > 0 && distance < 10) {
                 state = ObstacleDetected;
-            } else if (startTime >= timeoutDuration) {
+            } else if (currentTime - startTime >= timeoutDuration) {
                 state = Stop;
             }
             break;
 
         case RunBackward:
-            Serial.println("Robot running backward.");    
-            distance = readDistance();
+            Serial.println("Robot running backward."); 
+            Serial.print("Timer time : ");
+            Serial.println(currentTime - startTime);   
+            // distance = readDistance();
             stopMotors();
-            setMotorsSpeed(150);
+            setMotorsSpeed(100);
             runMotors(BACKWARD); 
             delay(500); 
             if (distance > 0 && distance < 10) {
                 state = ObstacleDetected;
-            } else if (startTime >= timeoutDuration) {
+            } else if (currentTime - startTime >= timeoutDuration) {
                 state = Stop;
             }
             break;
@@ -64,12 +67,14 @@ void FSM::handleState() {
         case ObstacleDetected:
             // Start timer
             if (startTime == 0) startTime = millis();
+            Serial.print("Timer time : ");
+            Serial.println(currentTime - startTime);
             stopMotors();
             Serial.print("Obstacle Detected : Robot stopping or changing direction");    
             Serial.println(direction);
             if(directionCounter >= 5){
                 state = Stop;
-                // break;
+                break;
             }
             switch (direction){
                 case 0:
@@ -97,9 +102,10 @@ void FSM::handleState() {
             break;
         
         case Stop:
-            Serial.println("Robot state: Stop");
+            Serial.println("Robot state: Stop.");
             stopMotors();
             directionCounter = 0;
+            delay(10000);
             break;
     }
 }
