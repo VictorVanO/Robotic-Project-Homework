@@ -1,14 +1,8 @@
 #include "Bluetooth.h"
 
-// Define the pins
-
-
 // Instantiate the SoftwareSerial object
 SoftwareSerial BTSerial(rxPin, txPin); // RX TX
 
-// Global variables
-String messageBuffer = "";
-String message = "";
 
 void initBluetooth() {
     // Define pin modes for TX and RX
