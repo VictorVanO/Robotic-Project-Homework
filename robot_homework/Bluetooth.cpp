@@ -1,9 +1,13 @@
-#include "Bluetooth.h"
+
+
+
+#include "SoftwareSerial.h"
 #include "Arduino.h"
 
 // Define the pins
 const byte rxPin = 0;
 const byte txPin = 1;
+
 
 // Instantiate the SoftwareSerial object
 SoftwareSerial BTSerial(rxPin, txPin); // RX TX
