@@ -4,6 +4,7 @@
 #include "Motors.h"
 #include "Bluetooth.h"
 #include "Ultrasonic.h"
+#include "Bluetooth.h"
 
 enum RobotState {
     Idle,
