@@ -10,6 +10,7 @@ extern Adafruit_DCMotor *motor2;
 void initMotors();
 void setMotorsSpeed(uint8_t speed);
 void runMotors(uint8_t direction);
+void goForward();
 void turnLeft();
 void turnRight();
 void stopMotors();

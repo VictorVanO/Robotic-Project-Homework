@@ -1,31 +1,26 @@
+#include "Bluetooth.h"
+#include "Arduino.h"
 
-
-#include "SoftwareSerial.h"
+// Define the pins
+const byte rxPin = 0;
+const byte txPin = 1;
 
 // Instantiate the SoftwareSerial object
 SoftwareSerial BTSerial(rxPin, txPin); // RX TX
 
 
+// Function to initialize the Bluetooth module
 void initBluetooth() {
-    // Define pin modes for TX and RX
-    // Set the RX pin as input (for receiving data from Bluetooth)
-    pinMode(rxPin, INPUT);
-    // Set the TX pin as output (for sending data to Bluetooth)
-    pinMode(txPin, OUTPUT);  
+    pinMode(rxPin, INPUT);   // Set the RX pin as input
+    pinMode(txPin, OUTPUT);  // Set the TX pin as output
+    BTSerial.begin(9600);   // Initialize Bluetooth communication
+    Serial.begin(9600);     // Initialize Serial Monitor communication
+}
 
-    // Initialize the Bluetooth serial communication at 9600 baud
-    BTSerial.begin(9600);
-    
-    // Initialize the Serial communication (to communicate with your computer's Serial Monitor)
-    Serial.begin(9600);
-
-
-
-void sendMessage(str newDirection) {
+// Function to send a message via Bluetooth
+void sendMessage(String newDirection) {
     String message = "New direction: ";
-    message += String(newDirection);
-    // Send the message to the Bluetooth serial interface
-    BTSerial.print(message);
-    // Send a newline to end the message cleanly
-    BTSerial.println();
+    message += newDirection;
+    BTSerial.println(message);
+    // Serial.println("Sending via Bluetooth: " + message);
 }

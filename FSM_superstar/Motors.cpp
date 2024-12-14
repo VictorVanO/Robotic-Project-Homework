@@ -24,6 +24,11 @@ void turnLeft() {
     motor2->run(FORWARD);
 }
 
+void goForward(){
+    motor1->run(FORWARD);
+    motor2->run(FORWARD);
+}
+
 void turnRight() {
     motor1->run(FORWARD);
     motor2->run(RELEASE);
