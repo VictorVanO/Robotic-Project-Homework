@@ -4,13 +4,15 @@
 #include "Motors.h"
 #include "Bluetooth.h"
 #include "Ultrasonic.h"
+#include "ServoLed.h"
+#include "Infrared.h"
 
 enum RobotState {
-    Idle,
-    ObstacleDetected,
-    RunForward,
-    RunBackward,
-    Stop
+    IDLE,
+    FOLLOW_LINE_STATE,
+    OBSTACLE_WAIT_STATE,
+    PAUSE_STATE,
+    PARTY_STATE
 };
 
 class FSM {
@@ -22,8 +24,6 @@ public:
 private:
     RobotState state;
     unsigned long startTime;
-    int direction;
-    int directionCounter;
     void handleState();
 };
 
