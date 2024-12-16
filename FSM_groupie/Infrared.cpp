@@ -1,9 +1,7 @@
 #include "Infrared.h"
 #include "Arduino.h"
 
-
 void initInfrared() {
-        // Initialize IR sensor pins
     pinMode(LEFT_IR_SENSOR, INPUT);
     pinMode(RIGHT_IR_SENSOR, INPUT); 
 }

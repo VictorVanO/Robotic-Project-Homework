@@ -20,18 +20,18 @@ void runMotors(uint8_t direction) {
 }
 
 void turnLeft() {
-    motor1->run(RELEASE);
-    motor2->run(FORWARD);
+  motor1->run(RELEASE);
+  motor2->run(FORWARD);
 }
 
 void goForward(){
-    motor1->run(FORWARD);
-    motor2->run(FORWARD);
+  motor1->run(FORWARD);
+  motor2->run(FORWARD);
 }
 
 void turnRight() {
-    motor1->run(FORWARD);
-    motor2->run(RELEASE);
+  motor1->run(FORWARD);
+  motor2->run(RELEASE);
 }
 
 void stopMotors() {

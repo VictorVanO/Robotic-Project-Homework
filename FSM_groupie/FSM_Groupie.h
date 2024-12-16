@@ -9,10 +9,10 @@
 
 enum RobotState {
     IDLE,
-    FOLLOW_LINE_STATE,
-    OBSTACLE_WAIT_STATE,
-    PAUSE_STATE,
-    PARTY_STATE
+    FOLLOW_LINE,
+    OBSTACLE_WAIT,
+    PAUSE,
+    PARTY
 };
 
 class FSM {

@@ -1,5 +1,5 @@
 #include "Bluetooth.h"
-#include "Arduino.h"
+#include <Arduino.h>
 
 // Define the pins
 const byte rxPin = 0;

@@ -1,16 +1,14 @@
 #include "ServoLed.h"
-#include <Arduino.h>
 #include <Servo.h>
+#include "Arduino.h"
 
 Servo myServo;
-
 
 void initServoLed() {
     pinMode(ledPin, OUTPUT);
     pinMode(resetButtonPin, INPUT_PULLUP); // Configure le bouton en entrée avec résistance interne
     myServo.attach(10);
     myServo.write(startAngle);
-
 }
 
 void angle() {
@@ -28,7 +26,6 @@ void angle() {
 
 void party() {
     int resetButton = digitalRead(resetButtonPin);
-    // Serial.println("TIME TO PARTYYY");
     while (resetButton != LOW)
     {
         angle();
