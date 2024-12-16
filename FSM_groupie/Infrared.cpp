@@ -39,12 +39,12 @@ int returnDirection() {
     return 2;
   }
   // If left = black && right = black -> Stop
-  else if (leftIR == LOW && rightIR == LOW) {
-    // Both sensors off the line, stop or reverse slightly
-    // Serial.println("CHANGE POSITION");
-    return 3;
-  }
-  delay(20); // Small delay for sensor stability
+  // else if (leftIR == LOW && rightIR == LOW) {
+  //   // Both sensors off the line, stop or reverse slightly
+  //   // Serial.println("CHANGE POSITION");
+  //   return 3;
+  // }
+  // delay(20); // Small delay for sensor stability
 }
 
 int returnDirection2() {// Read the values from the IR sensors : code works for turning 
