@@ -4,8 +4,6 @@
 #include <SoftwareSerial.h>
 #include <Arduino.h>
 
-
-// Pin configurations for Bluetooth
 extern const byte rxPin;
 extern const byte txPin;
 

@@ -16,7 +16,7 @@ void FSM::run() {
 
 void FSM::handleState() {
     float distance = readDistance();
-    const unsigned long timeoutDuration = 1000;  //!!!FINAL : 75000
+    const unsigned long timeoutDuration = 2000;  //!!!FINAL : 75 000
     const unsigned long timeoutParty = 20000;  //!!!FINAL : 100 000
     unsigned long currentTime = millis();
     
@@ -26,94 +26,66 @@ void FSM::handleState() {
               startTime = millis();
             }
             Serial.println("Robot state: Idle");
+            Serial.print("Waiting 2 seconds before starting.");
             sendMessage("Robot state: Idle");
-            // Serial.print("Waiting for timer : ");
-            Serial.println(distance);
-            // If there is an obstacle in less than 10cm
-            if (distance > 0 && distance < 10) {
-                state = OBSTACLE_WAIT;
-            } else if (currentTime - startTime >= timeoutDuration) {
-                state = FOLLOW_LINE;
-            }else {
+            // After 5 seconds, the robot starts if there is no obstacle.
+            if (currentTime - startTime >= timeoutDuration) {
+                if (distance > 0 && distance <= 5) {
+                    state = OBSTACLE_WAIT;
+                } else {
+                    state = FOLLOW_LINE;
+                }
+            } else {
                 state = IDLE;
             }
             break;
 
         case FOLLOW_LINE:
-            Serial.println("Robot state: Follow Line");
             sendMessage("Robot state: Follow Line");
-            if (currentTime - startTime <= 6000) //BEGINNING : GOES IN A STRAIGHT LINE : BETTER CODE
-            {
-              setMotorsSpeed(150);
-              switch (returnDirection())
-              {
-              case 0:
-                  goForward();
-                  break;
-              
-              case 1:
-                  turnRight();
-                  break;
-              case 2:
-
-                  turnLeft();
-                  break;
-              case 3:
-                  stopMotors();
-                  break;
-              default:
-                  break;
-              }
+            Serial.println(distance);
+            setMotorsSpeed(70);
+            switch (returnDirection()) {
+                case 0:
+                    Serial.println("Robot goes forward and follow white lines.");
+                    goForward();
+                    break;
+                case 1:
+                    Serial.println("Robot turn right.");
+                    turnRight();
+                    break;
+                case 2:
+                    Serial.println("Robot turn left.");
+                    turnLeft();
+                    break;
+                case 3:
+                    Serial.println("Robot stop because no white lines.");
+                    stopMotors();
+                    break;
+                default:
+                    break;
             }
-
-            // Serial.println("Robot following line.");
-            setMotorsSpeed(150);
-            switch (returnDirection2())//AFTER 6 SECS : BETTER CODE FOR TURNING
-            {
-            case 0:
-                goForward();
-                break;
-            
-            case 1:
-                turnRight();
-                break;
-            case 2:
-
-                turnLeft();
-                break;
-            case 3:
-                stopMotors();
-                break;
-            default:
-                break;
-            }
-
-            
-            if (distance > 0 && distance < 5) {
+            if (distance > 0 && distance <= 5) {
                 state = OBSTACLE_WAIT;
-            } else 
+            }
             break;
 
-        
         case OBSTACLE_WAIT:
-            
-            sendMessage("Robot state: Obstacle Wait");
-
-            stopMotors();
             Serial.println("Obstacle Detected : Robot stopping");
+            sendMessage("Robot state: Obstacle Wait");
+            Serial.println(distance);
+            stopMotors();
             if (distance > 5) {
                 state = FOLLOW_LINE;
                 break;
             }
-            else if (distance > 0 && distance < 5) {
+            else {
                 state = OBSTACLE_WAIT;
             }
             break;
         
         case PAUSE:
+            Serial.println("Robot state: Pause");
             sendMessage("Robot state: Pause");
-
-            Serial.println("Robot state: Pause.");
             stopMotors();
             if (currentTime - startTime >= timeoutParty) {
                 state = PARTY;
@@ -121,7 +93,7 @@ void FSM::handleState() {
             }else {
                 state = PAUSE;
             }
-            if (distance > 0 && distance < 5) {
+            if (distance > 0 && distance < 10) {
                 state = OBSTACLE_WAIT;
             }
             break;

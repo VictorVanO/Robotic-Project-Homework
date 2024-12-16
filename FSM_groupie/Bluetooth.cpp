@@ -1,15 +1,11 @@
 #include "Bluetooth.h"
 #include <Arduino.h>
 
-// Define the pins
 const byte rxPin = 0;
 const byte txPin = 1;
 
-// Instantiate the SoftwareSerial object
-SoftwareSerial BTSerial(rxPin, txPin); // RX TX
+SoftwareSerial BTSerial(rxPin, txPin);
 
-
-// Function to initialize the Bluetooth module
 void initBluetooth() {
     pinMode(rxPin, INPUT);   // Set the RX pin as input
     pinMode(txPin, OUTPUT);  // Set the TX pin as output
