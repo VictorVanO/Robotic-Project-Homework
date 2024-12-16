@@ -34,6 +34,7 @@ void FSM::handleState() {
             break;
 
         case RunForward:
+            sendMessage("Forward");
             Serial.println("Robot running forward.");
             Serial.print("Timer time : ");
             Serial.println(currentTime - startTime);
@@ -50,6 +51,7 @@ void FSM::handleState() {
             break;
 
         case RunBackward:
+            sendMessage("Backward");
             Serial.println("Robot running backward."); 
             Serial.print("Timer time : ");
             Serial.println(currentTime - startTime);   
@@ -83,13 +85,10 @@ void FSM::handleState() {
                     directionCounter++;
                     Serial.print("direction counter : ");
                     Serial.println(directionCounter);
-                    sendMessage("Forward");
-
                     break;
                 case 1:
                     direction = 2; //Backward
                     state = RunBackward;
-                    sendMessage("Backward")
                     directionCounter++;
                     Serial.print("direction counter : ");
                     Serial.println(directionCounter);
@@ -97,7 +96,6 @@ void FSM::handleState() {
                 case 2:
                     direction = 1;
                     state = RunForward;
-                    sendMessage("Forward")
                     directionCounter++;
                     Serial.print("direction counter : ");
                     Serial.println(directionCounter);

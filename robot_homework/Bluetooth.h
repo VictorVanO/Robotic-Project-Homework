@@ -3,14 +3,11 @@
 
 #include <SoftwareSerial.h>
 
-
-// Pin configurations for Bluetooth
-const byte rxPin = 8;
-const byte txPin = 9;
+const int rxPin = 7;
+const int txPin = 8;
 SoftwareSerial BTSerial;
 
-// Function declarations
 void initBluetooth();
-void sendMessage();
+void sendMessage(str);
 
 #endif // BLUETOOTH_H

@@ -18,7 +18,6 @@ void initBluetooth() {
     Serial.begin(9600);
 
 
-
 void sendMessage(str newDirection) {
     String message = "New direction: ";
     message += String(newDirection);
