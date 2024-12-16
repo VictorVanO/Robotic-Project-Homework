@@ -50,12 +50,18 @@ void FSM::handleState() {
                     goForward();
                     break;
                 case 1:
-                    Serial.println("Robot turn right.");
-                    turnRight();
+                    Serial.println("Robot turn left.");
+                    stopMotors();
+                    delay(500);
+                    turnLeft();
+                    delay(10);
                     break;
                 case 2:
-                    Serial.println("Robot turn left.");
-                    turnLeft();
+                    Serial.println("Robot turn right.");
+                    stopMotors();
+                    delay(500);
+                    turnRight();
+                    delay(10);
                     break;
                 case 3:
                     Serial.println("Robot stop because no white lines.");
