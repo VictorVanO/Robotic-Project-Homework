@@ -16,7 +16,7 @@ void FSM::run() {
 
 void FSM::handleState() {
     float distance = readDistance();
-    const unsigned long timeoutDuration = 2000;  //!!!FINAL : 75 000
+    const unsigned long timeoutDuration = 5000;  //!!!FINAL : 75 000
     const unsigned long timeoutParty = 20000;  //!!!FINAL : 100 000
     unsigned long currentTime = millis();
     
@@ -26,7 +26,7 @@ void FSM::handleState() {
               startTime = millis();
             }
             Serial.println("Robot state: Idle");
-            Serial.print("Waiting 2 seconds before starting.");
+            Serial.print("Waiting 5 seconds before starting.");
             sendMessage("Robot state: Idle");
             // After 5 seconds, the robot starts if there is no obstacle.
             if (currentTime - startTime >= timeoutDuration) {
@@ -50,12 +50,20 @@ void FSM::handleState() {
                     goForward();
                     break;
                 case 1:
-                    Serial.println("Robot turn right.");
-                    turnRight();
+                    Serial.println("Robot turn left.");
+                    // stopMotors();
+                    // delay(100);
+                    turnLeft();
+                    delay(50);
+                    stopMotors();
                     break;
                 case 2:
-                    Serial.println("Robot turn left.");
-                    turnLeft();
+                    Serial.println("Robot turn right.");
+                    // stopMotors();
+                    // delay(100);
+                    turnRight();
+                    delay(50);
+                    stopMotors();
                     break;
                 case 3:
                     Serial.println("Robot stop because no white lines.");
