@@ -18,6 +18,7 @@ void FSM::handleState() {
     float distance = readDistance();
     const unsigned long timeoutDuration = 5000;  //!!!FINAL : 75 000
     const unsigned long timeoutParty = 20000;  //!!!FINAL : 100 000
+    const unsigned long turnInZone = 14000;
     unsigned long currentTime = millis();
     
     switch (state) {
@@ -30,7 +31,7 @@ void FSM::handleState() {
             sendMessage("Robot state: Idle");
             // After 5 seconds, the robot starts if there is no obstacle.
             if (currentTime - startTime >= timeoutDuration) {
-                if (distance > 0 && distance <= 5) {
+                if (distance >= 0 && distance <= 15) {
                     state = OBSTACLE_WAIT;
                 } else {
                     state = FOLLOW_LINE;
@@ -41,6 +42,10 @@ void FSM::handleState() {
             break;
 
         case FOLLOW_LINE:
+            if (currentTime - startTime >= turnInZone) {
+                state = TURN_IN_ZONE;
+                break;
+            }
             sendMessage("Robot state: Follow Line");
             Serial.println(distance);
             setMotorsSpeed(70);
@@ -51,16 +56,12 @@ void FSM::handleState() {
                     break;
                 case 1:
                     Serial.println("Robot turn left.");
-                    // stopMotors();
-                    // delay(100);
                     turnLeft();
                     delay(50);
                     stopMotors();
                     break;
                 case 2:
                     Serial.println("Robot turn right.");
-                    // stopMotors();
-                    // delay(100);
                     turnRight();
                     delay(50);
                     stopMotors();
@@ -72,9 +73,12 @@ void FSM::handleState() {
                 default:
                     break;
             }
-            if (distance > 0 && distance <= 5) {
+            if (distance >= 0 && distance <= 15) {
                 state = OBSTACLE_WAIT;
-            }
+            } 
+            // else if (currentTime - startTime >= timeoutParty) {
+            //     state = PARTY;
+            // }
             break;
 
         case OBSTACLE_WAIT:
@@ -82,7 +86,8 @@ void FSM::handleState() {
             sendMessage("Robot state: Obstacle Wait");
             Serial.println(distance);
             stopMotors();
-            if (distance > 5) {
+            delay(500);
+            if (distance > 10) {
                 state = FOLLOW_LINE;
                 break;
             }
@@ -91,24 +96,21 @@ void FSM::handleState() {
             }
             break;
         
-        case PAUSE:
-            Serial.println("Robot state: Pause");
-            sendMessage("Robot state: Pause");
+        case TURN_IN_ZONE:
+            Serial.println("Robot state: Turn in Zone");
+            sendMessage("Robot state: Turn in Zone");
+            turnRight();
+            delay(500);
             stopMotors();
-            if (currentTime - startTime >= timeoutParty) {
+            if (currentTime - startTime >= turnInZone + 500) {
                 state = PARTY;
-                break;
-            }else {
-                state = PAUSE;
-            }
-            if (distance > 0 && distance < 10) {
-                state = OBSTACLE_WAIT;
             }
             break;
             
         case PARTY:
             sendMessage("Robot state: Party");
             Serial.println("Party time ! ");
+            Serial.println(distance);
             stopMotors();
             party();
     }

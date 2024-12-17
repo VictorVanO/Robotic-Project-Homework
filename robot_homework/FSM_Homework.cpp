@@ -39,6 +39,8 @@ void FSM::handleState() {
             Serial.print("Timer time : ");
             Serial.println(currentTime - startTime);
             // distance = readDistance(); 
+            Serial.print("Distance from object: ");
+            Serial.println(distance);
             stopMotors();
             setMotorsSpeed(100);
             runMotors(FORWARD); 

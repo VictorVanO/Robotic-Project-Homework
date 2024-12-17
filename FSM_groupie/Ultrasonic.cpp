@@ -1,9 +1,10 @@
+#include "Arduino.h"
 #include "Ultrasonic.h"
-#include <Arduino.h>
 
 void initUltrasonic() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
+  Serial.begin(9600);
 }
 
 float readDistance() {
@@ -16,6 +17,6 @@ float readDistance() {
   digitalWrite(trigPin, LOW);
 
   duration = pulseIn(echoPin, HIGH);
-  distance = (duration * 0.0343) / 2;
+  distance = (duration * 0.034) / 2;
   return distance;
 }

@@ -11,7 +11,7 @@ enum RobotState {
     IDLE,
     FOLLOW_LINE,
     OBSTACLE_WAIT,
-    PAUSE,
+    TURN_IN_ZONE,
     PARTY
 };
 

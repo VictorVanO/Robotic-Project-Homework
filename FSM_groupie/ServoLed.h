@@ -1,10 +1,9 @@
 #ifndef SERVOLED_H
 #define SERVOLED_H
 
-const int ledPin = 5;
-const int resetButtonPin = 2; // Bouton de reset
-const int startAngle = 0;
-const int endAngle = 90;
+const int ledPin = 6;
+const int startAngle = 90;
+const int endAngle = 180;
 const int stepDelay = 15;
 
 void initServoLed();
